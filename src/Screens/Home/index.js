@@ -7,13 +7,33 @@ export class Home extends Component {
   constructor(props) {
     super(props);
   }
+  state = {
+    filterData: [],
+    test: 0,
+  };
 
   componentDidMount() {
     this.props.getAllCards();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.filter(nextProps.data);
+  }
+
+  filter = data => {
+    const rawData = this.state.filterData;
+    if (data) {
+      Object.values(data).forEach(el => {
+        el.map(e => (e.mechanics ? rawData.push(e) : null));
+        this.setState({filterData: rawData});
+      });
+    }
+  };
+
   render() {
-    const {data, processing, error} = this.props;
+    const {processing, error} = this.props;
+    console.log(this.state.filterData);
+    console.log(this.state.test);
     return processing ? (
       <Text>LOADİNG</Text>
     ) : (
