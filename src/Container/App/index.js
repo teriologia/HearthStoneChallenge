@@ -1,6 +1,6 @@
 import React from 'react';
 import {Scene, Router, Stack} from 'react-native-router-flux';
-import {Home} from '../../screens';
+import {Home} from '../../Screens';
 
 const RouterComponent = () => {
   return (
