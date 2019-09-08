@@ -24,16 +24,22 @@ export class Home extends Component {
 
   filter = data => {
     const rawData = this.state.filterData;
+    const { mechanics} = this.state;
     if (data) {
-      this.setState({
-        mechanics: Object.keys(data).filter(
-          el => el !== 'Promo' && el !== 'System' && el !== 'Debug',
-        ),
-      });
       Object.values(data).forEach(el => {
         el.map(e => (e.mechanics ? rawData.push(e) : null));
         this.setState({filterData: rawData});
       });
+
+      rawData.forEach(el =>
+        el.mechanics.forEach(e => {
+          if (mechanics.indexOf(e.name) !== -1) {
+            console.log('test')
+          } else {
+            mechanics.push(e.name);
+          }
+        }),
+      );
     }
   };
 
