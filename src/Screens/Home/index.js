@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllCards} from '../../Store/getCards/action';
+import styles from './styles';
 
 export class Home extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ export class Home extends Component {
   }
   state = {
     filterData: [],
-    test: 0,
+    mechanics: [],
   };
 
   componentDidMount() {
@@ -23,6 +24,9 @@ export class Home extends Component {
   filter = data => {
     const rawData = this.state.filterData;
     if (data) {
+      this.setState({
+        mechanics: Object.keys(data).filter(el => el !== 'Promo'),
+      });
       Object.values(data).forEach(el => {
         el.map(e => (e.mechanics ? rawData.push(e) : null));
         this.setState({filterData: rawData});
@@ -31,15 +35,18 @@ export class Home extends Component {
   };
 
   render() {
-    const {processing, error} = this.props;
-    console.log(this.state.filterData);
-    console.log(this.state.test);
+    const {mechanics} = this.state;
+    const {processing} = this.props;
     return processing ? (
       <Text>LOADİNG</Text>
     ) : (
-      <View>
-        <Text> Home </Text>
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        {mechanics.map(el => (
+          <TouchableOpacity key={el} style={styles.button}>
+            <Text style={styles.mechanics}>{el}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     );
   }
 }
