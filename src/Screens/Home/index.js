@@ -24,7 +24,7 @@ export class Home extends Component {
 
   filter = data => {
     const rawData = this.state.filterData;
-    const { mechanics} = this.state;
+    const {mechanics} = this.state;
     if (data) {
       Object.values(data).forEach(el => {
         el.map(e => (e.mechanics ? rawData.push(e) : null));
