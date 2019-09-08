@@ -15,6 +15,7 @@ class CategoryDetail extends Component {
     const {item} = data;
     return (
       <FlipCard
+        style={styles.flipCard}
         flipHorizontal={true}
         flipVertical={false}
         friction={6}
@@ -30,13 +31,15 @@ class CategoryDetail extends Component {
         </View>
         {/* Back Side */}
         <View style={styles.card}>
-          <Text>{`Card Set: ${item.cardSet}`}</Text>
-          <Text>{`Player Class: ${item.playerClass}`}</Text>
-          <Text>{`Card Rarity: ${item.rarity}`}</Text>
-          <Text>{`Card Type : ${item.type}`}</Text>
-          <Text>{`Race : ${item.race}`}</Text>
-          <Text>{`health : ${item.health}`}</Text>
-          <Text>{`attack : ${item.attack}`}</Text>
+        <Text style={styles.info}>Card Info</Text>
+          <Text style={styles.infoText}>{`Cost: ${item.cost}`}</Text>
+          <Text style={styles.infoText}>{`Card Set: ${item.cardSet}`}</Text>
+          <Text style={styles.infoText}>{`Player Class: ${item.playerClass}`}</Text>
+          <Text style={styles.infoText}>{`Card Rarity: ${item.rarity}`}</Text>
+          <Text style={styles.infoText}>{`Card Type : ${item.type}`}</Text>
+          <Text style={styles.infoText}>{`Race : ${item.race}`}</Text>
+          <Text style={styles.infoText}>{`health : ${item.health}`}</Text>
+          <Text style={styles.infoText}>{`attack : ${item.attack}`}</Text>
         </View>
       </FlipCard>
     );
