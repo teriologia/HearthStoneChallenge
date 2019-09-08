@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import {getAllCards} from '../../Store/getCards/action';
 import styles from './styles';
 
@@ -25,13 +26,20 @@ export class Home extends Component {
     const rawData = this.state.filterData;
     if (data) {
       this.setState({
-        mechanics: Object.keys(data).filter(el => el !== 'Promo'),
+        mechanics: Object.keys(data).filter(
+          el => el !== 'Promo' && el !== 'System' && el !== 'Debug',
+        ),
       });
       Object.values(data).forEach(el => {
         el.map(e => (e.mechanics ? rawData.push(e) : null));
         this.setState({filterData: rawData});
       });
     }
+  };
+
+  sendData = async el => {
+    const test = await this.state.filterData.filter(e => e.cardSet === el);
+    Actions.CategoryDetail(test);
   };
 
   render() {
@@ -42,7 +50,10 @@ export class Home extends Component {
     ) : (
       <ScrollView contentContainerStyle={styles.container}>
         {mechanics.map(el => (
-          <TouchableOpacity key={el} style={styles.button}>
+          <TouchableOpacity
+            key={el}
+            onPress={() => this.sendData(el)}
+            style={styles.button}>
             <Text style={styles.mechanics}>{el}</Text>
           </TouchableOpacity>
         ))}
