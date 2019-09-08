@@ -34,7 +34,7 @@ export class Home extends Component {
       rawData.forEach(el =>
         el.mechanics.forEach(e => {
           if (mechanics.indexOf(e.name) !== -1) {
-            console.log('test')
+            return;
           } else {
             mechanics.push(e.name);
           }
@@ -43,9 +43,16 @@ export class Home extends Component {
     }
   };
 
-  sendData = async el => {
-    const test = await this.state.filterData.filter(e => e.cardSet === el);
-    Actions.CategoryDetail(test);
+  sendData = el => {
+    let data = [];
+    this.state.filterData.forEach(e =>
+      e.mechanics.filter(i => {
+        if (i.name == el.name) {
+          data.push(e);
+        }
+      }),
+    );
+    Actions.CategoryDetail(data);
   };
 
   render() {
@@ -58,7 +65,7 @@ export class Home extends Component {
         {mechanics.map(el => (
           <TouchableOpacity
             key={el}
-            onPress={() => this.sendData(el)}
+            onPress={() => this.sendData({name: el})}
             style={styles.button}>
             <Text style={styles.mechanics}>{el}</Text>
           </TouchableOpacity>

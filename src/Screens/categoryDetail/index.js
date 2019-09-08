@@ -13,7 +13,7 @@ class CategoryDetail extends Component {
 
   render() {
     const {data} = this.props;
-    console.log(data);
+      console.log(this.props);
     return (
       <View>
         <FlatList data={data} renderItem={this.renterItem} />
